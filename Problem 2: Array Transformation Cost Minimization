@@ -1,0 +1,33 @@
+def min_operations(arr, k):
+    from collections import Counter
+
+    min_ops = float('inf')
+
+    for target in arr:
+        ops = 0
+        possible = True
+
+        for num in arr:
+            if (num - target) % k != 0:
+                possible = False
+                break
+            ops += abs(num - target) // k
+
+        if possible:
+            min_ops = min(min_ops, ops)
+
+    return min_ops if min_ops != float('inf') else -1
+
+
+print("Enter size of array:")
+n = int(input())
+
+print("Enter array elements:")
+arr = list(map(int, input().split()))
+
+print("Enter value of K:")
+k = int(input())
+
+result = min_operations(arr, k)
+
+print("Minimum operations required:", result)
