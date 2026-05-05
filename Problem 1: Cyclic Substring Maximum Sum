@@ -1,0 +1,34 @@
+def max_cyclic_sum(s):
+    n = len(s)
+    s = s + s   # make cyclic
+    seen = set()
+    left = 0
+    curr_sum = 0
+    max_sum = 0
+
+    for right in range(len(s)):
+        while s[right] in seen:
+            seen.remove(s[left])
+            curr_sum -= (ord(s[left]) - ord('a') + 1)
+            left += 1
+
+        seen.add(s[right])
+        curr_sum += (ord(s[right]) - ord('a') + 1)
+
+        # window length should not exceed original length
+        if right - left + 1 > n:
+            seen.remove(s[left])
+            curr_sum -= (ord(s[left]) - ord('a') + 1)
+            left += 1
+
+        max_sum = max(max_sum, curr_sum)
+
+    return max_sum
+
+
+print("Enter string:")
+s = input().strip()
+
+result = max_cyclic_sum(s)
+
+print("Maximum Cyclic Substring Sum:", result)
